@@ -1,131 +1,29 @@
-﻿using EspacioCalculadora;
+﻿using Personal;
 internal class Program
 {
     private static void Main(string[] args)
     {
-        Calculadora calc = new Calculadora();
-        String opcion;
-        Double numero;
+        Empleado empleado1 = new Empleado("jose", "lopez", new DateTime(1998, 8, 14), 'C', new DateTime(2015, 7, 18), 550000, Cargos.Especialista);
+        Empleado empleado2 = new Empleado("juan", "nuñes", new DateTime(1985, 10, 15), 'C', new DateTime(2009, 5, 20), 650000, Cargos.Ingeniero);
+        Empleado empleado3 = new Empleado("lucas", "Santillan", new DateTime(2000, 2, 18), 'S', new DateTime(2018, 3, 12), 400000, Cargos.Administrativo);
+
+        Empleado[] empleados={empleado1, empleado2, empleado3};
+
         Console.Clear();
-        do
-        {   
-            Console.WriteLine("\tCalculadora V3");
-            Console.WriteLine("Resultado = " + calc.Resultado);
-            Console.WriteLine("1. Suma");
-            Console.WriteLine("2. Resta");
-            Console.WriteLine("3. Multiplicación");
-            Console.WriteLine("4. División");
-            Console.WriteLine("5. Limpiar");
-            Console.WriteLine("0. Salir");
-            Console.Write("Ingrese una opción: ");
-            opcion = Console.ReadLine();
-            switch (opcion)
+        Console.WriteLine("Monto total de Salarios: " +(empleado1.Salario()+empleado2.Salario()+empleado3.Salario()));
+
+        Empleado empleadoAjubilarse = empleado1;
+
+        foreach (Empleado empleado in empleados)
+        {
+            if(empleado.AniosParaJubilacion() < empleadoAjubilarse.AniosParaJubilacion())
             {
-                case "1":
-                do
-                {
-                    Console.Write("Ingresar número: ");
-                    if (double.TryParse(Console.ReadLine(), out numero))
-                    {
-                        calc.Sumar(numero);
-                        Console.Clear();
-                        Console.WriteLine("Resultado = " + calc.Resultado);
-                        Console.WriteLine("1. Sumar otro número");
-                        Console.WriteLine("2. Terminar operacion");
-                        Console.Write("Ingrese una opción: ");
-                        opcion = Console.ReadLine();
-                        if (opcion != "2" && opcion != "1")
-                        {
-                            Console.Clear();
-                            Console.WriteLine("ERROR - Opcion no válida");
-                            break;
-                        }
-                    }
-                    Console.Clear();
-                } while (opcion == "1");
-                break;
-
-                case "2":
-                do
-                {
-                    Console.Write("Ingresar número: ");
-                    if (double.TryParse(Console.ReadLine(), out numero))
-                    {
-                        calc.Restar(numero);
-                        Console.Clear();
-                        Console.WriteLine("Resultado = " + calc.Resultado);
-                        Console.WriteLine("1. Restar otro número");
-                        Console.WriteLine("2. Terminar operacion");
-                        Console.Write("Ingrese una opción: ");
-                        opcion = Console.ReadLine();
-                        if (opcion != "2" && opcion != "1")
-                        {
-                            Console.Clear();
-                            Console.WriteLine("ERROR - Opcion no válida");
-                            break;
-                        }
-                    }
-                    Console.Clear();
-                } while (opcion == "1");
-                break;
-
-                case "3":
-                do
-                {
-                    Console.Write("Ingresar número: ");
-                    if (double.TryParse(Console.ReadLine(), out numero))
-                    {
-                        calc.Multiplicar(numero);
-                        Console.Clear();
-                        Console.WriteLine("Resultado = " + calc.Resultado);
-                        Console.WriteLine("1. Multiplicar otro número");
-                        Console.WriteLine("2. Terminar operacion");
-                        Console.Write("Ingrese una opción: ");
-                        opcion = Console.ReadLine();
-                        if (opcion != "2" && opcion != "1")
-                        {
-                            Console.Clear();
-                            Console.WriteLine("ERROR - Opcion no válida");
-                            break;
-                        }
-                    }
-                    Console.Clear();
-                } while (opcion == "1");
-                break;
-                case "4":
-                do
-                {
-                    Console.Write("Ingresar número: ");
-                    if (double.TryParse(Console.ReadLine(), out numero))
-                    {
-                        Console.Clear();
-                        calc.Dividir(numero);
-                        Console.WriteLine("Resultado = " + calc.Resultado);
-                        Console.WriteLine("1. Dividir otro número");
-                        Console.WriteLine("2. Terminar operacion");
-                        Console.Write("Ingrese una opción: ");
-                        opcion = Console.ReadLine();
-                        if (opcion != "2" && opcion != "1")
-                        {
-                            Console.Clear();
-                            Console.WriteLine("ERROR - Opcion no válida");
-                            break;
-                        }
-                    }
-                    Console.Clear();
-                } while (opcion == "1");
-
-                break;
-                case "5":
-                Console.Clear();
-                calc.Limpiar();
-
-                break;
-                case "0":
-                    Console.WriteLine("Saliendo...");
-                break;
+                empleadoAjubilarse=empleado;
             }
+        }
 
-        } while (opcion != "0");
+        Console.WriteLine("---- Datos del empleado Más próximo a jubilarse ----");
+        empleadoAjubilarse.MostrarDatos();
     }
+
 }
